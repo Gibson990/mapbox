@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'map_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _fromController = TextEditingController();
+  final TextEditingController _toController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +37,37 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             TextField(
-              decoration: InputDecoration(
+              controller: _fromController,
+              decoration: const InputDecoration(
                 labelText: 'From',
                 prefixIcon: Icon(Icons.location_on_outlined),
               ),
             ),
             const SizedBox(height: 16),
             TextField(
-              decoration: InputDecoration(
+              controller: _toController,
+              decoration: const InputDecoration(
                 labelText: 'To',
                 prefixIcon: Icon(Icons.flag_outlined),
               ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(onPressed: () {}, child: const Text('Select Ride')),
+            ElevatedButton(
+              onPressed: () {
+                if (_fromController.text.isEmpty || _toController.text.isEmpty) {
+                  return;
+                }
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => MapScreen(
+                      origin: _fromController.text,
+                      destination: _toController.text,
+                    ),
+                  ),
+                );
+              },
+              child: const Text('Select Ride'),
+            ),
           ],
         ),
       ),
