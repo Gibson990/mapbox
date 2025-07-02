@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'config.dart';
+import 'screens/map_screen.dart';
 import 'screens/home_screen.dart';
+// import 'screens/home_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  MapboxOptions.setAccessToken(mapboxAccessToken);
   runApp(const MapboxBookingApp());
 }
 
@@ -40,6 +46,8 @@ class MapboxBookingApp extends StatelessWidget {
           ),
         ),
       ),
+      debugShowCheckedModeBanner: false,
+      // home: const HomeScreen(),
       home: const HomeScreen(),
     );
   }
